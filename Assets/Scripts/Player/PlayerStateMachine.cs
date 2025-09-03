@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
-    public PlayerIdleState IdelState; // 대기 상태
+    public PlayerIdleState IdleState; // 대기 상태
+    public PlayerJogState JogState; // 조깅 상태
 
     private PlayerStateBase _currentState; // 현재 상태
+    public PlayerStateBase PrevState;
 
     // State 클래스에 필요한 정보를 전달할 컨텍스트를 넘겨줌
     public PlayerStateMachine(PlayerStateContext context)
     {
-        IdelState = new PlayerIdleState(context);
+        IdleState = new PlayerIdleState(context);
+        JogState = new PlayerJogState(context);
     }
 
     // 상태 머신 초기화
@@ -22,6 +25,7 @@ public class PlayerStateMachine
     // 현재 상태 전환
     public void TransitionTo(PlayerStateBase nextState)
     {
+        PrevState = _currentState; // 이전 상태 저장
         _currentState?.ExitState(); // 현재 상태 종료
         _currentState = nextState; // 현재 상태 교체
         _currentState.EnterState(); // 현재 상태 시작

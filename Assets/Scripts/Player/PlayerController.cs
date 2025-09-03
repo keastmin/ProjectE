@@ -7,9 +7,12 @@ public class PlayerController : MonoBehaviour
 
     Animator _animator;
 
+    Rigidbody _rigidbody;
+
     private void Awake()
     {
         InitAnimator();
+        InitRigidbody();
     }
 
     private void Start()
@@ -37,6 +40,15 @@ public class PlayerController : MonoBehaviour
     private void InitAnimator()
     {
         TryGetComponent(out _animator);
+        _animator.applyRootMotion = true;
+    }
+
+    private void InitRigidbody()
+    {
+        TryGetComponent(out _rigidbody);
+        _rigidbody.useGravity = false;
+        _rigidbody.freezeRotation = true;
+        _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     // 상태 머신 초기화 함수
@@ -46,13 +58,16 @@ public class PlayerController : MonoBehaviour
         _stateContext = new PlayerStateContext
         {
             Controller = this,
-            StateMachine = _stateMachine,
-            Animator = _animator
+            Animator = _animator,
+            Rigidbody = _rigidbody
         };
 
         // 상태 머신 초기화
         _stateMachine = new PlayerStateMachine(_stateContext);
-        _stateMachine.InitStateMachine(_stateMachine.IdelState);
+
+        _stateContext.StateMachine = _stateMachine;
+
+        _stateMachine.InitStateMachine(_stateMachine.IdleState);
     }
 
     #endregion
