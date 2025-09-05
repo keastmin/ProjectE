@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
     PlayerStateMachine _stateMachine;
     PlayerStateContext _stateContext;
 
+    PlayerInputController _inputController;
+
     Animator _animator;
 
     Rigidbody _rigidbody;
@@ -13,6 +15,7 @@ public class PlayerController : MonoBehaviour
     {
         InitAnimator();
         InitRigidbody();
+        InitInputController();
     }
 
     private void Start()
@@ -51,6 +54,11 @@ public class PlayerController : MonoBehaviour
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
+    private void InitInputController()
+    {
+        TryGetComponent(out _inputController);
+    }
+
     // 상태 머신 초기화 함수
     private void InitStateMachine()
     {
@@ -58,8 +66,10 @@ public class PlayerController : MonoBehaviour
         _stateContext = new PlayerStateContext
         {
             Controller = this,
+            InputController = _inputController,
             Animator = _animator,
-            Rigidbody = _rigidbody
+            Rigidbody = _rigidbody,
+            MainCamera = Camera.main
         };
 
         // 상태 머신 초기화

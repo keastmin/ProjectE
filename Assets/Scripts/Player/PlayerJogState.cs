@@ -9,7 +9,9 @@ public class PlayerJogState : PlayerStateBase
     public override void EnterState()
     {
         Debug.Log("Jog State");
-        _context.Animator.SetBool("IsJog", true);
+
+        // Jog 애니메이션 활성화
+        _context.AnimatorSetBool("IsJog", true);
     }
 
     public override void Execute()
@@ -19,28 +21,25 @@ public class PlayerJogState : PlayerStateBase
 
     public override void FixedExecute()
     {
-        float dt = Time.fixedDeltaTime;
-        Vector3 dp = _accPos;
-        dp.y = 0f;
-
-        _accPos = Vector3.zero;
-
-        _context.Rigidbody.linearVelocity = dp / dt;
+        _context.LookDirection();
+        _context.ApplyAnimationVelocity(_context.AniDelta, Time.fixedDeltaTime);
+        _context.AniDelta = Vector3.zero;
     }
 
     public override void AnimationMoveExecute()
     {
-        _accPos += _context.Animator.deltaPosition;
+        _context.AniDelta += _context.Animator.deltaPosition;
     }
 
     public override void ExitState()
     {
-        _context.Animator.SetBool("IsJog", false);
+        // Jog 애니메이션 비활성화
+        _context.AnimatorSetBool("IsJog", false);
     }
 
     private void TransitionTo()
     {
-        if (Input.GetKeyUp(KeyCode.W))
+        if (_context.MoveInput.sqrMagnitude == 0f)
         {
             _context.StateMachine.TransitionTo(_context.StateMachine.IdleState);
         }
