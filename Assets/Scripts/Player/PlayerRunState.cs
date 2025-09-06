@@ -1,15 +1,14 @@
 using UnityEngine;
 
-public class PlayerJogState : PlayerStateBase
+public class PlayerRunState : PlayerStateBase
 {
-    public PlayerJogState(PlayerStateContext context) : base(context) { }
+    public PlayerRunState(PlayerStateContext context) : base(context) { }
 
     public override void EnterState()
     {
-        Debug.Log("Jog State");
+        Debug.Log("Run State");
 
-        // Jog 애니메이션 활성화
-        _context.AnimatorSetBool("IsJog", true);
+        _context.AnimatorSetBool("IsRun", true);
     }
 
     public override void Execute()
@@ -31,19 +30,14 @@ public class PlayerJogState : PlayerStateBase
 
     public override void ExitState()
     {
-        // Jog 애니메이션 비활성화
-        _context.AnimatorSetBool("IsJog", false);
+        _context.AnimatorSetBool("IsRun", false);
     }
 
     private void TransitionTo()
     {
-        if (_context.MoveInput.sqrMagnitude == 0f)
+        if(_context.MoveInput.sqrMagnitude == 0f)
         {
             _context.StateMachine.TransitionTo(_context.StateMachine.IdleState);
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            _context.StateMachine.TransitionTo(_context.StateMachine.RunState);
         }
     }
 }

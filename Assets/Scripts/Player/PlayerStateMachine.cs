@@ -4,6 +4,7 @@ public class PlayerStateMachine
 {
     public PlayerIdleState IdleState; // 대기 상태
     public PlayerJogState JogState; // 조깅 상태
+    public PlayerRunState RunState; // 달리기 상태
 
     private PlayerStateBase _currentState; // 현재 상태
     public PlayerStateBase PrevState;
@@ -13,6 +14,7 @@ public class PlayerStateMachine
     {
         IdleState = new PlayerIdleState(context);
         JogState = new PlayerJogState(context);
+        RunState = new PlayerRunState(context);
     }
 
     // 상태 머신 초기화

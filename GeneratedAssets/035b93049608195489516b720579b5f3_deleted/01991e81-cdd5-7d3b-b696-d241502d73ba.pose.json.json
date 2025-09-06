@@ -1,0 +1,11 @@
+{
+    "asset": "035b93049608195489516b720579b5f3",
+    "fileName": "01991e81-cdd5-7d3b-b696-d241502d73ba.pose.json",
+    "prompt": "Fast Run To Idle, Root Motion",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1403123851,
+    "w3CTraceId": "4576c33bc72a7de0e27c895b090bf2fd",
+    "isTrimmed": false
+}

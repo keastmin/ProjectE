@@ -7,6 +7,8 @@ public class PlayerIdleState : PlayerStateBase
     public override void EnterState()
     {
         Debug.Log("Idle State");
+
+        _context.AnimatorSetBool("IsIdle", true); // Idle 애니메이션 활성화
     }
 
     public override void Execute()
@@ -28,7 +30,7 @@ public class PlayerIdleState : PlayerStateBase
 
     public override void ExitState()
     {
-        
+        _context.AnimatorSetBool("IsIdle", false); // Idle 애니메이션 비활성화
     }
 
     private void TransitionTo()
