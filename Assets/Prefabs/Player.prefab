@@ -1260,6 +1260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 611178522548038899}
+  - component: {fileID: 6012037113295191437}
   - component: {fileID: 7195958479014601440}
   - component: {fileID: 3617726493034834130}
   m_Layer: 0
@@ -1284,6 +1285,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6932263140577491341}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6012037113295191437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5534006162460583657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tiny.Trail
+  material: {fileID: 2100000, guid: 33ed670cc556cf34883fcc0e58740db4, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 0
+  points:
+  - {x: 0.0036067604, y: 0.012010633, z: 0.18487705}
+  - {x: -0.0040191985, y: 0.019485353, z: 0.32118565}
+  - {x: -0.0027753972, y: 0.022416303, z: 0.45699814}
+  - {x: -0.0019248567, y: 0.020832183, z: 0.57970285}
+  - {x: -0.0013949896, y: 0.015287294, z: 0.69398445}
+  - {x: -0.00093371526, y: 0.008411336, z: 0.8104787}
+  - {x: -0.0005189178, y: 0.002898079, z: 0.9096989}
+  - {x: -0.00041611795, y: -0.010178132, z: 1.031499}
+  - {x: -0.00079749693, y: -0.025911426, z: 1.1130867}
 --- !u!33 &7195958479014601440
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1655,7 +1682,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7227527523439970200, guid: d3ffbb53d382790469e6c8f926efe5f6, type: 3}
+  - {fileID: 2100000, guid: 95498a1c32582b34c8065d3b7830ad22, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2365,6 +2392,7 @@ GameObject:
   - component: {fileID: 7668465080543000258}
   - component: {fileID: 7556914307713484527}
   - component: {fileID: 8784827589120271740}
+  - component: {fileID: 6058747091628192334}
   - component: {fileID: 7077324991221199874}
   - component: {fileID: 4302379388566889997}
   - component: {fileID: 1709513578302706843}
@@ -2404,6 +2432,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1606c15a51f3d2a4da00ae53e0a6231c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rotateSpeed: 0.2
+  _speedThreshold: 0.01
+  _speedLerpValue: 8
+  _jogSpeed: 5
+  _runSpeed: 8
+  _dodgeTime: 0.4
+  _dodgeSpeed: 8
+  _dodgeRotationSpeed: 15
+  _comboAttackRotateTime: 0.1
+  _comboAttackRotateSpeed: 0.4
 --- !u!114 &8784827589120271740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2416,7 +2454,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bafa3f4f0bb72fc45ad870cddcbe5713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
+  _inputMaintainTime: 0.2
+  DodgeInput: 0
   MoveInput: {x: 0, y: 0}
+  ComboAttackInput: 0
+--- !u!114 &6058747091628192334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8827917131882080394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb73030eb91856f4bbce6eb8c28e22c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationEvents
+  CanNextComboAttack: 0
+  CanExitComboAttack: 0
+  ComboAttackFinish: 0
 --- !u!95 &7077324991221199874
 Animator:
   serializedVersion: 7

@@ -8,42 +8,47 @@ public class PlayerJogState : PlayerStateBase
     {
         Debug.Log("Jog State");
 
-        // Jog 애니메이션 활성화
-        _context.AnimatorSetBool("IsJog", true);
+        // Jog 속도로 목표 속도를 설정
+        _context.SetTargetSpeed(_context.Controller.JogSpeed);
+
+        // Move 애니메이션 활성화
+        _context.AnimatorSetBool("IsMove", true);
     }
 
     public override void Execute()
     {
-        TransitionTo();
+
     }
 
     public override void FixedExecute()
     {
-        _context.LookDirection();
-        _context.ApplyAnimationVelocity(_context.AniDelta, Time.fixedDeltaTime);
-        _context.AniDelta = Vector3.zero;
-    }
-
-    public override void AnimationMoveExecute()
-    {
-        _context.AniDelta += _context.Animator.deltaPosition;
+        _context.LookDirection(_context.Controller.RotateSpeed);
+        _context.Move();
+        TransitionTo();
     }
 
     public override void ExitState()
     {
-        // Jog 애니메이션 비활성화
-        _context.AnimatorSetBool("IsJog", false);
+        // Move 애니메이션 비활성화
+        _context.AnimatorSetBool("IsMove", false);
     }
 
     private void TransitionTo()
     {
-        if (_context.MoveInput.sqrMagnitude == 0f)
+        if (_context.MoveInput.sqrMagnitude == 0f)        // 움직임 입력이 없을 경우
         {
+            // Idle 상태로 전환
             _context.StateMachine.TransitionTo(_context.StateMachine.IdleState);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        else if (_context.DodgeInput) // 회피 입력이 있을 경우
         {
-            _context.StateMachine.TransitionTo(_context.StateMachine.RunState);
+            // 회피 상태로 전환
+            _context.StateMachine.TransitionTo(_context.StateMachine.DodgeState);
+        }
+        else if (_context.ComboAttackInput) // 콤보 공격 입력이 있을 경우
+        {
+            // 콤보 공격 상태로 전환
+            _context.StateMachine.TransitionTo(_context.StateMachine.ComboAttackState);
         }
     }
 }
