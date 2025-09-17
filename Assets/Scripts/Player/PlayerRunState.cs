@@ -48,5 +48,10 @@ public class PlayerRunState : PlayerStateBase
             // 회피 상태로 전환
             _context.StateMachine.TransitionTo(_context.StateMachine.DodgeState);
         }
+        else if (_context.ComboAttackInput) // 공격 입력이 있을 경우
+        {
+            // 대쉬 공격 상태로 전환
+            _context.StateMachine.TransitionTo(_context.StateMachine.DashAttackState);
+        }
     }
 }

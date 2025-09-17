@@ -33,8 +33,16 @@ public class PlayerComboAttackState : PlayerStateBase
             _context.LookDirection(_context.Controller.ComboAttackRotateSpeed);
         }
 
-        _context.Move();
+        // 애니메이션 기반 움직임
+        _context.ApplyAnimationVelocity(_context.AniDelta, Time.fixedDeltaTime);
+        _context.AniDelta = Vector3.zero;
+        
         TransitionTo();
+    }
+
+    public override void AnimationMoveExecute()
+    {
+        _context.AniDelta += _context.Animator.deltaPosition;
     }
 
     public override void ExitState()

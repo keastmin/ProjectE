@@ -39,6 +39,11 @@ public class PlayerIdleState : PlayerStateBase
         {
             _context.StateMachine.TransitionTo(_context.StateMachine.JogState);
         }
+        else if (_context.DodgeInput) // 회피 입력이 있을 경우
+        {
+            // 회피 상태로 전환
+            _context.StateMachine.TransitionTo(_context.StateMachine.DodgeState);
+        }
         else if (_context.ComboAttackInput) // 콤보 공격 입력이 있을 경우
         {
             // 콤보 공격 상태로 전환

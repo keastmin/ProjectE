@@ -7,6 +7,7 @@ public class PlayerStateMachine
     public PlayerDodgeState DodgeState; // 회피 상태
     public PlayerRunState RunState; // 달리기 상태
     public PlayerComboAttackState ComboAttackState; // 콤보 공격 상태
+    public PlayerDashAttackState DashAttackState; // 대쉬 공격 상태
 
     private PlayerStateBase _currentState; // 현재 상태
     public PlayerStateBase PrevState;
@@ -19,6 +20,7 @@ public class PlayerStateMachine
         DodgeState = new PlayerDodgeState(context);
         RunState = new PlayerRunState(context);
         ComboAttackState = new PlayerComboAttackState(context);
+        DashAttackState = new PlayerDashAttackState(context);
     }
 
     // 상태 머신 초기화

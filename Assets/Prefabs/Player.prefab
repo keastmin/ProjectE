@@ -2437,9 +2437,8 @@ MonoBehaviour:
   _speedLerpValue: 8
   _jogSpeed: 5
   _runSpeed: 8
-  _dodgeTime: 0.4
+  _dodgeTime: 0.35
   _dodgeSpeed: 8
-  _dodgeRotationSpeed: 15
   _comboAttackRotateTime: 0.1
   _comboAttackRotateSpeed: 0.4
 --- !u!114 &8784827589120271740

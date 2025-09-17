@@ -23,6 +23,13 @@ public sealed class PlayerStateContext
     public void AnimatorSetTrigger(string name) => Animator.SetTrigger(name);
 
 
+    // Animator의 deltaPosition을 이용해 Rigidbody에 Velocity를 적용하는 함수
+    public void ApplyAnimationVelocity(Vector3 deltaPos, float deltaTime, bool applyYValue = false)
+    {
+        Vector3 velocity = GetAnimationVelocity(deltaPos, deltaTime, applyYValue);
+        ApplyVelocity(velocity);
+    }
+
     // Animator의 deltaPosition을 이용해 Velocity를 반환하는 함수
     public Vector3 GetAnimationVelocity(Vector3 deltaPos, float deltaTime, bool applyYValue = false)
     {
@@ -31,12 +38,6 @@ public sealed class PlayerStateContext
         if (!applyYValue) dp.y = 0f;
 
         return dp / deltaTime;
-    }
-
-    // Animator의 deltaPosition을 이용해 Rigidbody에 Velocity를 적용하는 함수
-    public void ApplyAnimationVelocity(Vector3 deltaPos, float deltaTime, bool applyYValue = false)
-    {
-        Rigidbody.linearVelocity = GetAnimationVelocity(deltaPos, deltaTime, applyYValue);
     }
 
     // Rigidbody에 Velocity를 적용하는 함수

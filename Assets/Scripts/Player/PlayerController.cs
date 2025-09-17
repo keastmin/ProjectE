@@ -12,9 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _runSpeed = 8f;
 
     [Header("Dodge")]
-    [SerializeField] private float _dodgeTime = 0.8f;
+    [SerializeField] private float _dodgeTime = 0.35f;
     [SerializeField] private float _dodgeSpeed = 8f;
-    [SerializeField] private float _dodgeRotationSpeed = 15f;
 
     [Header("Combo Attack")]
     [SerializeField] private float _comboAttackRotateTime = 0.1f; // 콤보 공격 사이사이에 들어가는 회전 시간
