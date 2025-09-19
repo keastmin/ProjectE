@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -7,6 +8,10 @@ using UnityEditor;
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
 {
+    [Header("Idle")]
+    [SerializeField] private float _minIdleTime = 5f;
+    [SerializeField] private float _maxIdleTime = 10f;
+
     [Header("Target")]
     [SerializeField] private Transform _target;
 
@@ -38,6 +43,13 @@ public class EnemyController : MonoBehaviour
     private int _cornerIndex;
     private bool _suspended; // 외력 동안 true
 
+    // 상태 머신
+    private EnemyStateMachine _stateMachine;
+    public EnemyStateMachine StateMachine => _stateMachine;
+
+    // 프로퍼티
+    public float RandIdleTime => Random.Range(_minIdleTime, _maxIdleTime);
+
     private void OnValidate()
     {
         if (_path == null) _path = new NavMeshPath();
@@ -51,6 +63,11 @@ public class EnemyController : MonoBehaviour
 
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         if (_path == null) _path = new NavMeshPath();
+    }
+
+    private void Start()
+    {
+        InitStateMachine();
     }
 
     private void OnEnable()
@@ -70,6 +87,8 @@ public class EnemyController : MonoBehaviour
             RecalculatePath();
             _repathTimer = Mathf.Max(0.01f, _repathInterval);
         }
+
+        _stateMachine.Execute();
     }
 
     private void FixedUpdate()
@@ -125,6 +144,8 @@ public class EnemyController : MonoBehaviour
             Quaternion r = Quaternion.LookRotation(new Vector3(horiz.x, 0f, horiz.z));
             transform.rotation = Quaternion.RotateTowards(transform.rotation, r, _rotationSpeedDeg * Time.fixedDeltaTime);
         }
+
+        _stateMachine.FixedExecute();
     }
 
     // === 경로계산 ===
@@ -212,4 +233,10 @@ public class EnemyController : MonoBehaviour
     // 외부에서 코너 배열을 읽고 싶을 때
     public Vector3[] GetCorners() => _path?.corners;
     public NavMeshPathStatus PathStatus => _path != null ? _path.status : NavMeshPathStatus.PathInvalid;
+
+    private void InitStateMachine()
+    {
+        _stateMachine = new EnemyStateMachine(this);
+        _stateMachine.InitState(_stateMachine.IdleState);
+    }
 }
